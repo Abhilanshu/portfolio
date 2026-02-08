@@ -45,13 +45,17 @@ export function Floor() {
                     vec4 splat = texture2D(uSplatMap, vUv);
                     
                     // Base: Green Channel (Grass/Sand)
-                    vec3 color = mix(uColorSand, uColorGrass, splat.g);
+                    // Sharpen the transition using smoothstep
+                    float grassFactor = smoothstep(0.1, 0.3, splat.g);
+                    vec3 color = mix(uColorSand, uColorGrass, grassFactor);
                     
                     // Mix Road (Red Channel)
-                    color = mix(color, uColorRoad, splat.r);
+                    float roadFactor = smoothstep(0.1, 0.3, splat.r);
+                    color = mix(color, uColorRoad, roadFactor);
                     
                     // Water (Blue Channel) -> Alpha
-                    float alpha = 1.0 - splat.b;
+                    // Sharp cutout for water
+                    float alpha = 1.0 - smoothstep(0.1, 0.3, splat.b);
                     
                     gl_FragColor = vec4(color, alpha);
                 }

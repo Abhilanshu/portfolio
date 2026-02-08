@@ -53,6 +53,9 @@ function TreeGroup({ visualPath, referencePath, leavesColor }: TreeGroupProps) {
                 // In Bruno's source, children of the scene are the instances
                 if (child.parent === referenceScene) {
                     const pos = child.position.clone()
+                    // Fix floating trees: Drop them down slightly to match terrain
+                    pos.y -= 1.0
+
                     // Trust reference model positions entirely
                     instances.push({
                         position: pos,

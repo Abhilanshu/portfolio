@@ -2,7 +2,7 @@ import { Text } from '@react-three/drei'
 
 export function About() {
     return (
-        <group position={[20, 0, -35]}>
+        <group position={[20, 3, -35]}>
             {/* Background panel */}
             {/* Title */}
             <Text

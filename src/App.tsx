@@ -1,11 +1,13 @@
+```javascript
 import { Canvas } from '@react-three/fiber'
 import { Physics } from '@react-three/rapier'
 import { Experience } from './Experience'
-import { KeyboardControls, Loader } from '@react-three/drei'
+import { KeyboardControls } from '@react-three/drei'
 import { EffectComposer, TiltShift2, Vignette, Bloom } from '@react-three/postprocessing'
 import { Suspense } from 'react'
 import { IntroScreen } from './IntroScreen'
 import { UI } from './UI'
+import { LoadingScreen } from './LoadingScreen'
 
 export default function App() {
   const map = [
@@ -29,7 +31,7 @@ export default function App() {
           gl={{ antialias: true, alpha: false }}
           dpr={[1, 2]}
         >
-          <Suspense fallback={null}>
+          <Suspense fallback={<LoadingScreen />}>
             <Physics debug={false} gravity={[0, -9.81, 0]}>
               <Experience />
             </Physics>
@@ -40,11 +42,9 @@ export default function App() {
             </EffectComposer>
           </Suspense>
         </Canvas>
-        <Loader
-          containerStyles={{ background: '#f5d6ba' }}
           innerStyles={{ background: '#ffaa00' }}
           barStyles={{ background: '#ff6600' }}
-          dataInterpolation={(p) => `Loading ${p.toFixed(0)}%`}
+          dataInterpolation={(p) => `Loading ${ p.toFixed(0) }% `}
         />
       </KeyboardControls>
     </>

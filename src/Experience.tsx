@@ -16,6 +16,9 @@ import { CherryTrees } from './CherryTrees'
 import { Playground } from './Playground'
 import { ExplosiveCrates } from './ExplosiveCrates'
 import { Timeline } from './Timeline'
+import { Contact } from './Contact'
+import { Skills } from './Skills'
+import { About } from './About'
 import { BowlingPins } from './BowlingPins'
 import { BrickWall } from './BrickWall'
 import { Particles } from './Particles'
@@ -82,6 +85,9 @@ export const Experience = () => {
             <BrickWall />
             <Particles />
             <Timeline />
+            <Contact />
+            <Skills />
+            <About />
             <Flowers />
             <Bushes />
             <PoleLights />

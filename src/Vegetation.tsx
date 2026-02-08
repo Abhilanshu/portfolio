@@ -8,9 +8,10 @@ interface TreeGroupProps {
     leavesColor: string
 }
 
-function TreeGroup({ visualPath, referencePath, leavesColor }: TreeGroupProps) {
-    const { scene: visualScene } = useGLTF(visualPath) as any
-    const { scene: referenceScene } = useGLTF(referencePath) as any
+export function Vegetation({ count = 50 }: VegetationProps) {
+    const { scene: treeScene } = useGLTF('/assets/models/vegetation/tree_stylized.glb')
+
+    // Create instanced mesh data
 
     // 2. Process Reference Model (Positions)
     const instances = useMemo(() => {

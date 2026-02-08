@@ -7,32 +7,7 @@ interface ExplosiveCrateProps {
     position: [number, number, number]
 }
 
-function CratePiece({ position, impulse }: { position: [number, number, number], impulse: THREE.Vector3 }) {
-    const ref = useRef<RapierRigidBody>(null)
 
-    // Apply impulse on mount
-    useFrame(() => {
-        if (ref.current && impulse) {
-            ref.current.applyImpulse(impulse, true)
-            impulse.set(0, 0, 0) // Only apply once
-        }
-    })
-
-    return (
-        <RigidBody
-            ref={ref}
-            position={position}
-            colliders="cuboid"
-            restitution={0.3}
-            friction={0.8}
-        >
-            <mesh castShadow>
-                <boxGeometry args={[0.2, 0.2, 0.2]} />
-                <meshStandardMaterial color="#8B4513" />
-            </mesh>
-        </RigidBody>
-    )
-}
 
 export function ExplosiveCrate({ position }: ExplosiveCrateProps) {
     const [exploded, setExploded] = useState(false)

@@ -27,7 +27,7 @@ import { BrickWall } from './BrickWall'
 import { Particles } from './Particles'
 import { TireTracks } from './TireTracks'
 import { Bridge } from './Bridge'
-import { BoundaryMarkers } from './BoundaryMarkers'
+// import { BoundaryMarkers } from './BoundaryMarkers'
 
 export const Experience = () => {
     return (

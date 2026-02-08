@@ -79,7 +79,7 @@ export function Skills() {
     const angleStep = (Math.PI * 2) / skills.length
 
     return (
-        <group position={[25, 0, 0]}>
+        <group position={[35, 0, 10]}>
             {/* Title */}
             <Text
                 position={[0, 4, 0]}

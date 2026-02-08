@@ -113,8 +113,8 @@ export function Timeline() {
             {/* Connecting line between all milestones - neon glow */}
             {timelineData.map((_, index) => {
                 if (index === timelineData.length - 1) return null
-                const x1 = -15 + index * spacing
-                const x2 = -15 + (index + 1) * spacing
+                const x1 = -30 + index * spacing
+                const x2 = -30 + (index + 1) * spacing
                 const lineLength = spacing
 
                 return (
@@ -138,13 +138,13 @@ export function Timeline() {
                 <TimelineItem
                     key={index}
                     entry={entry}
-                    position={[-15 + index * spacing, 0, -15]}
+                    position={[-30 + index * spacing, 0, 15]}
                     index={index}
                 />
             ))}
 
             {/* Title sign with neon effect */}
-            <group position={[-15, 0, -20]}>
+            <group position={[-30, 0, 20]}>
                 <mesh position={[0, 2, 0]} castShadow>
                     <boxGeometry args={[4, 1, 0.2]} />
                     <meshStandardMaterial

@@ -12,7 +12,7 @@ export function Contact() {
     }
 
     return (
-        <group position={[0, 0, -30]}>
+        <group position={[-20, 0, -35]}>
             {/* Main Title */}
             <Text
                 position={[0, 3, 0]}

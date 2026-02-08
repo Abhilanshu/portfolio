@@ -1,4 +1,3 @@
-```javascript
 import { Canvas } from '@react-three/fiber'
 import { Physics } from '@react-three/rapier'
 import { Experience } from './Experience'
@@ -42,10 +41,6 @@ export default function App() {
             </EffectComposer>
           </Suspense>
         </Canvas>
-          innerStyles={{ background: '#ffaa00' }}
-          barStyles={{ background: '#ff6600' }}
-          dataInterpolation={(p) => `Loading ${ p.toFixed(0) }% `}
-        />
       </KeyboardControls>
     </>
   )

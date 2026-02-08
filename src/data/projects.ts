@@ -14,4 +14,14 @@ export const projects = [
         url: 'https://github.com/Abhilanshu/abhilanshu-dust',
         image: 'madbox-1.png',
     },
+    {
+        title: 'Interactive Museum',
+        url: 'https://github.com/Abhilanshu/abhilanshu-museum',
+        image: 'luni-1.png',
+    },
+    {
+        title: 'FitAI Platform',
+        url: 'https://github.com/Abhilanshu/fit-ai-',
+        image: 'scout-1.png',
+    },
 ]

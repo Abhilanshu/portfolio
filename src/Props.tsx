@@ -1,5 +1,4 @@
 import { useGLTF, Instances, Instance } from '@react-three/drei'
-import { RigidBody, CuboidCollider } from '@react-three/rapier'
 import { useMemo } from 'react'
 import * as THREE from 'three'
 
@@ -7,13 +6,10 @@ interface PropGroupProps {
     name: string
     modelPath: string
     scale?: number
-    collider?: 'box' | 'hull' | 'trimesh'
-    type?: 'fixed' | 'dynamic'
-    mass?: number
     offset?: [number, number, number]
 }
 
-function PropGroup({ modelPath, scale = 1, collider = 'trimesh', type = 'fixed', mass = 1, offset = [0, 0, 0] }: PropGroupProps) {
+function PropGroup({ modelPath, scale = 1, offset = [0, 0, 0] }: PropGroupProps) {
     const { scene } = useGLTF(modelPath) as any
 
     // Extract instances from the scene children
@@ -67,14 +63,14 @@ export function Props() {
     return (
         <>
             {/* Original Items */}
-            <PropGroup name="fences" modelPath="/assets/models/fences/fences.glb" collider="trimesh" type="fixed" />
-            <PropGroup name="benches" modelPath="/assets/models/benches/benches.glb" collider="trimesh" type="fixed" />
-            <PropGroup name="lanterns" modelPath="/assets/models/lanterns/lanterns.glb" collider="trimesh" scale={1} type="fixed" />
+            <PropGroup name="fences" modelPath="/assets/models/fences/fences.glb" />
+            <PropGroup name="benches" modelPath="/assets/models/benches/benches.glb" />
+            <PropGroup name="lanterns" modelPath="/assets/models/lanterns/lanterns.glb" scale={1} />
 
             {/* Extra Density */}
-            <PropGroup name="fences_extra" modelPath="/assets/models/fences/fences.glb" collider="trimesh" type="fixed" offset={[40, 0, 40]} />
-            <PropGroup name="benches_extra" modelPath="/assets/models/benches/benches.glb" collider="trimesh" type="fixed" offset={[-40, 0, -40]} />
-            <PropGroup name="lanterns_extra" modelPath="/assets/models/lanterns/lanterns.glb" collider="trimesh" scale={1} type="fixed" offset={[20, 0, -20]} />
+            <PropGroup name="fences_extra" modelPath="/assets/models/fences/fences.glb" offset={[40, 0, 40]} />
+            <PropGroup name="benches_extra" modelPath="/assets/models/benches/benches.glb" offset={[-40, 0, -40]} />
+            <PropGroup name="lanterns_extra" modelPath="/assets/models/lanterns/lanterns.glb" scale={1} offset={[20, 0, -20]} />
         </>
     )
 }

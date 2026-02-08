@@ -1,8 +1,6 @@
 import { useGLTF, Instances, Instance } from '@react-three/drei'
-import { RigidBody, CuboidCollider } from '@react-three/rapier'
 import { useMemo } from 'react'
 import * as THREE from 'three'
-import { mergeBufferGeometries } from 'three-stdlib'
 
 interface TreeGroupProps {
     visualPath: string

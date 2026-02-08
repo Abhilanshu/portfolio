@@ -20,7 +20,6 @@ export function Contact() {
                 color="#FFD700"
                 anchorX="center"
                 anchorY="middle"
-                font="/fonts/Inter-Bold.woff"
             >
                 GET IN TOUCH
             </Text>

@@ -1,19 +1,17 @@
-import { useGLTF, Instances, Instance } from '@react-three/drei'
+import { useGLTF } from '@react-three/drei'
 import { useMemo } from 'react'
 import * as THREE from 'three'
 
 interface TreeGroupProps {
     visualPath: string
     referencePath: string
-    leavesColor: string
 }
 
-export function Vegetation({ count = 50 }: VegetationProps) {
-    const { scene: treeScene } = useGLTF('/assets/models/vegetation/tree_stylized.glb')
+function TreeGroup({ visualPath, referencePath }: TreeGroupProps) {
+    const { scene: visualScene } = useGLTF(visualPath) as any
+    const { scene: referenceScene } = useGLTF(referencePath) as any
 
-    // Create instanced mesh data
-
-    // 2. Process Reference Model (Positions)
+    // Process Reference Model (Positions)
     const instances = useMemo(() => {
         const temp: { position: THREE.Vector3; rotation: THREE.Euler; scale: THREE.Vector3 }[] = []
         if (referenceScene) {
@@ -52,12 +50,10 @@ export function Vegetation() {
             <TreeGroup
                 visualPath="/assets/models/birchTrees/birchTreesVisual.glb"
                 referencePath="/assets/models/birchTrees/birchTreesReferences.glb"
-                leavesColor="#ff4f2b"
             />
             <TreeGroup
                 visualPath="/assets/models/oakTrees/oakTreesVisual.glb"
                 referencePath="/assets/models/oakTrees/oakTreesReferences.glb"
-                leavesColor="#b4b536"
             />
         </>
     )

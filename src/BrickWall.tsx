@@ -1,6 +1,4 @@
-import { useRef, useState } from 'react'
-import { RigidBody, RapierRigidBody } from '@react-three/rapier'
-import * as THREE from 'three'
+import { useState } from 'react'
 
 interface Brick {
     position: [number, number, number]
@@ -8,7 +6,7 @@ interface Brick {
 }
 
 export function BrickWall() {
-    const [bricks, setBricks] = useState<Brick[]>(() => {
+    const [bricks] = useState<Brick[]>(() => {
         const brickArray: Brick[] = []
         const wallX = -20
         const wallZ = 10

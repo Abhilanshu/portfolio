@@ -1,7 +1,3 @@
-import { useRef } from 'react'
-import { RigidBody } from '@react-three/rapier'
-import * as THREE from 'three'
-
 // Bowling pins arranged in standard formation
 export function BowlingPins() {
     const pinPositions: Array<[number, number, number]> = [

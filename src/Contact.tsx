@@ -5,10 +5,10 @@ export function Contact() {
     const [hoveredLink, setHoveredLink] = useState<string | null>(null)
 
     const contactInfo = {
-        email: 'abhilanshu@example.com', // TODO: Update with your real email
+        email: 'abhilanshuvittolia22@gmail.com',
         github: 'Abhilanshu',
-        linkedin: 'abhilanshu', // TODO: Update with your LinkedIn username
-        twitter: 'abhilanshu' // TODO: Update with your Twitter handle
+        linkedin: 'abhilanshu-vittolia-33a161359',
+        twitter: 'abhilanshu' // TODO: Update with your Twitter handle if you have one
     }
 
     return (

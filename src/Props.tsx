@@ -33,15 +33,15 @@ function PropGroup({ modelPath, scale = 1, collider = 'trimesh', type = 'fixed',
                     // Apply extra offset
                     const pos = mesh.position.clone().add(new THREE.Vector3(...offset))
 
-                    // Filter out props on the track (Radius 48 - 68)
-                    const radius = Math.sqrt(pos.x * pos.x + pos.z * pos.z)
-                    if (radius < 48 || radius > 68) {
-                        instances.push({
-                            position: pos,
-                            rotation: mesh.rotation.clone(),
-                            scale: mesh.scale.clone().multiplyScalar(scale)
-                        })
-                    }
+                    // Fix floating props: Drop them down to match terrain
+                    pos.y -= 1.0
+
+                    // Trust reference/manual positions - NO FILTERING
+                    instances.push({
+                        position: pos,
+                        rotation: mesh.rotation.clone(),
+                        scale: mesh.scale.clone().multiplyScalar(scale)
+                    })
                 }
             })
         }

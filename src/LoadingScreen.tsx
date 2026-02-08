@@ -2,7 +2,7 @@ import { useProgress } from '@react-three/drei'
 import { useEffect, useState } from 'react'
 
 export function LoadingScreen() {
-    const { progress, active } = useProgress()
+    const { progress } = useProgress()
     const [finished, setFinished] = useState(false)
 
     useEffect(() => {

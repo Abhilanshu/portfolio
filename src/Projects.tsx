@@ -108,8 +108,8 @@ export function Projects() {
                     <ProjectBoard
                         key={index}
                         project={project}
-                        position={[x, y, z]}
-                        rotation={rotation}
+                        position={[x, y, z] as [number, number, number]}
+                        rotation={rotation as [number, number, number]}
                     />
                 )
             })}

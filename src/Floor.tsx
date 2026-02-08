@@ -77,14 +77,8 @@ export function Floor() {
         })
     }, [splatMap, noiseTexture])
 
-    const slabMaterial = useMemo(() => {
-        return new THREE.MeshStandardMaterial({
-            map: noiseTexture,
-            roughness: 0.9,
-            metalness: 0,
-            color: '#ffcf8b',
-        })
-    }, [noiseTexture])
+    // slabMaterial removed as it was unused
+
 
     // Apply material to everything in the scene
     useMemo(() => {

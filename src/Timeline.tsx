@@ -38,10 +38,9 @@ const timelineData: TimelineEntry[] = [
 interface TimelineCardProps {
     entry: TimelineEntry
     position: [number, number, number]
-    index: number
 }
 
-function TimelineCard({ entry, position, index }: TimelineCardProps) {
+function TimelineCard({ entry, position }: TimelineCardProps) {
     const addPoints = useGameStore((state) => state.addPoints)
     const [showPoints, setShowPoints] = useState(false)
 
@@ -74,7 +73,7 @@ function TimelineCard({ entry, position, index }: TimelineCardProps) {
         // Title
         ctx.fillStyle = '#ffffff'
         ctx.font = 'bold 36px Arial'
-        const titleLines = wrapText(ctx, entry.title, canvas.width - 40, 36)
+        const titleLines = wrapText(ctx, entry.title, canvas.width - 40)
         titleLines.forEach((line, i) => {
             ctx.fillText(line, canvas.width / 2, 160 + i * 42)
         })
@@ -87,7 +86,7 @@ function TimelineCard({ entry, position, index }: TimelineCardProps) {
         // Description
         ctx.fillStyle = '#cccccc'
         ctx.font = '22px Arial'
-        const descLines = wrapText(ctx, entry.description, canvas.width - 40, 22)
+        const descLines = wrapText(ctx, entry.description, canvas.width - 40)
         descLines.forEach((line, i) => {
             ctx.fillText(line, canvas.width / 2, 300 + i * 28)
         })
@@ -192,7 +191,6 @@ export function Timeline() {
                         key={index}
                         entry={entry}
                         position={[x, 1, 0]}
-                        index={index}
                     />
                 )
             })}

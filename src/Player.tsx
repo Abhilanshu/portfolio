@@ -6,7 +6,7 @@ import * as THREE from 'three'
 
 export const Player = () => {
     const body = useRef<RapierRigidBody>(null)
-    const [subscribeKeys, getKeys] = useKeyboardControls()
+    const [, getKeys] = useKeyboardControls()
 
     // Smooth camera target
     const [smoothedCameraPosition] = useState(() => new THREE.Vector3(10, 10, 10))

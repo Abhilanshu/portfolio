@@ -25,7 +25,7 @@ export function Particles() {
         return { positions, velocities }
     }, [count])
 
-    useFrame((state, delta) => {
+    useFrame((_state, delta) => {
         if (!particlesRef.current) return
 
         const positions = particlesRef.current.geometry.attributes.position.array as Float32Array
@@ -55,6 +55,7 @@ export function Particles() {
                     count={count}
                     array={positions}
                     itemSize={3}
+                    args={[positions, 3]}
                 />
             </bufferGeometry>
             <pointsMaterial

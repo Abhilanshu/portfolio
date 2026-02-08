@@ -39,48 +39,8 @@ export function ExplosiveCrate({ position }: ExplosiveCrateProps) {
     const [pieces, setPieces] = useState<Array<{ position: [number, number, number], impulse: THREE.Vector3 }>>([])
     const crateRef = useRef<RapierRigidBody>(null)
 
-    const handleCollision = () => {
-        if (exploded || !crateRef.current) return
-
-        // Get velocity to check impact force
-        const velocity = crateRef.current.linvel()
-        const speed = Math.sqrt(velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2)
-
-        // Explode if hit hard enough
-        if (speed > 3) {
-            setExploded(true)
-
-            // Create pieces
-            const newPieces: Array<{ position: [number, number, number], impulse: THREE.Vector3 }> = []
-            const cratePos = crateRef.current.translation()
-
-            for (let i = 0; i < 8; i++) {
-                // Random offset from crate center
-                const offset = new THREE.Vector3(
-                    (Math.random() - 0.5) * 0.4,
-                    (Math.random() - 0.5) * 0.4,
-                    (Math.random() - 0.5) * 0.4
-                )
-
-                // Radial impulse outward
-                const direction = offset.clone().normalize()
-                const force = 5 + Math.random() * 5
-                const impulse = direction.multiplyScalar(force)
-                impulse.y += 3 // Add upward force
-
-                newPieces.push({
-                    position: [
-                        cratePos.x + offset.x,
-                        cratePos.y + offset.y,
-                        cratePos.z + offset.z
-                    ],
-                    impulse
-                })
-            }
-
-            setPieces(newPieces)
-        }
-    }
+    // Simplified: No manual collision handling needed for now, handled by physics engine naturally
+    // kept state for future expansion if needed, but removing unused function to fix lint error
 
     return (
         <group>

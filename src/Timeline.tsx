@@ -12,22 +12,22 @@ interface TimelineEntry {
 
 const timelineData: TimelineEntry[] = [
     {
-        year: '2024',
-        title: 'Senior Developer',
-        company: 'Tech Company',
-        description: 'Leading development team'
+        year: '2023',
+        title: 'B.Tech in CSE (AI & DS)',
+        company: 'LNCT, Bhopal',
+        description: 'Pursuing degree in Computer Science with specialization in AI & Data Science'
+    },
+    {
+        year: '2023',
+        title: 'Higher Secondary',
+        company: 'St. Xavier\'s School, Bhopal',
+        description: 'Completed 13 years of schooling'
     },
     {
         year: '2022',
-        title: 'Full Stack Developer',
-        company: 'Startup Inc',
-        description: 'Built scalable web applications'
-    },
-    {
-        year: '2020',
-        title: 'Junior Developer',
-        company: 'First Job',
-        description: 'Started career in web development'
+        title: 'Web Development Journey',
+        company: 'Self-taught',
+        description: 'Started building projects with HTML, CSS, JavaScript & React'
     },
 ]
 

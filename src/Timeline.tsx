@@ -1,4 +1,4 @@
-import { useTexture, Text } from '@react-three/drei'
+import { Text } from '@react-three/drei'
 import { useMemo, useState } from 'react'
 import * as THREE from 'three'
 import { useGameStore } from './store/useGameStore'
@@ -104,7 +104,7 @@ function TimelineCard({ entry, position, index }: TimelineCardProps) {
     }
 
     // Helper function to wrap text
-    function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number, fontSize: number): string[] {
+    function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
         const words = text.split(' ')
         const lines: string[] = []
         let currentLine = words[0]

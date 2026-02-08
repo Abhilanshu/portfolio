@@ -1,14 +1,9 @@
 import { useGameStore } from './store/useGameStore'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useEffect, useState } from 'react'
+
 
 export function ScoreDisplay() {
     const score = useGameStore((state) => state.score)
-    const [prevScore, setPrevScore] = useState(score)
-
-    useEffect(() => {
-        setPrevScore(score)
-    }, [score])
 
     // Only show if score > 0
     if (score === 0) return null

@@ -29,7 +29,7 @@ export function About() {
                 anchorY="middle"
                 maxWidth={7.5}
             >
-                Full Stack Developer
+                Abhilanshu
             </Text>
 
             {/* Bio text */}
@@ -42,10 +42,10 @@ export function About() {
                 maxWidth={7}
                 lineHeight={1.5}
             >
-                Passionate about creating immersive{'\n'}
-                3D web experiences with Three.js{'\n'}
-                and React. Love bringing ideas to{'\n'}
-                life through code and creativity.
+                Creative Developer building{'\n'}
+                interactive web experiences.{'\n'}
+                Passionate about 3D graphics,{'\n'}
+                modern web technologies & AI.
             </Text>
 
             {/* Interests / Skills highlight */}
@@ -57,7 +57,7 @@ export function About() {
                 anchorY="middle"
                 maxWidth={7}
             >
-                WebGL • Shaders • Creative Coding
+                HTML • CSS • JavaScript • Three.js • React
             </Text>
 
             {/* Pedestal */}

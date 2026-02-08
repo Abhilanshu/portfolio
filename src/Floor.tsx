@@ -106,14 +106,8 @@ export function Floor() {
                 <CuboidCollider args={[100, 0.1, 100]} />
             </RigidBody>
 
-            {/* Visual terrain mesh (no collision) */}
+            {/* Visual terrain mesh with custom shader */}
             <primitive object={scene} />
-
-            {/* Central floor slab */}
-            <mesh rotation-x={-Math.PI / 2} position-y={0.01} receiveShadow>
-                <circleGeometry args={[15, 32]} />
-                <meshStandardMaterial color="#b8b8b8" roughness={0.8} />
-            </mesh>
         </>
     )
 }

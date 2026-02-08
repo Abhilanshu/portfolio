@@ -6,7 +6,6 @@ import { EffectComposer, TiltShift2, Vignette, Bloom } from '@react-three/postpr
 import { Suspense } from 'react'
 import { IntroScreen } from './IntroScreen'
 import { UI } from './UI'
-import { LoadingScreen } from './LoadingScreen'
 
 export default function App() {
   const map = [
@@ -30,7 +29,7 @@ export default function App() {
           gl={{ antialias: true, alpha: false }}
           dpr={[1, 2]}
         >
-          <Suspense fallback={<LoadingScreen />}>
+          <Suspense fallback={null}>
             <Physics debug={false} gravity={[0, -9.81, 0]}>
               <Experience />
             </Physics>

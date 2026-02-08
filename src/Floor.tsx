@@ -63,9 +63,39 @@ export function Floor() {
     }, [slabsTexture])
 
     const terrainMaterial = useMemo(() => {
-        return new THREE.MeshStandardMaterial({
-            color: '#ffa94e', // Orange ground (Bruno style)
-            roughness: 1,
+        return new THREE.ShaderMaterial({
+            uniforms: {
+                uColorWater: { value: new THREE.Color('#4da8da') },
+                uColorSand: { value: new THREE.Color('#ffe8b5') },
+                uColorGrass: { value: new THREE.Color('#ffa94e') }, // Orange ground
+                uSplatMap: { value: useTexture('/assets/models/terrain/terrain.png') },
+            },
+            vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform vec3 uColorWater;
+                uniform vec3 uColorSand;
+                uniform vec3 uColorGrass;
+                uniform sampler2D uSplatMap;
+                varying vec2 vUv;
+                
+                void main() {
+                    vec4 splat = texture2D(uSplatMap, vUv);
+                    vec3 color = mix(uColorSand, uColorGrass, splat.g);
+                    color = mix(color, uColorWater, splat.b);
+                    
+                    // Create holes for water where blue channel is high
+                    float alpha = 1.0 - splat.b; 
+                    
+                    gl_FragColor = vec4(color, alpha);
+                }
+            `,
+            transparent: true,
         })
     }, [])
 

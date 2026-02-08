@@ -66,6 +66,12 @@ export function Projects() {
                 // Stagger them left and right? Or just on one side?
                 // Let's alternate sides: Left (-6), Right (6)
                 const z = -20 - (index * 15) // Start at -20, space by 15
+                // This is placing them on the central road (which is safe) taking them away from the ring track.
+                // Wait, user said "tracks is not round tracks... see the tracks direction like bruno simon"
+                // Bruno's track is the RED channel roughly. 
+                // The user might be referring to the central straight road vs the outer ring.
+
+                // Leave projects as is for now, they are on the central slab area.
                 const x = index % 2 === 0 ? -6 : 6
                 const rotY = index % 2 === 0 ? 0.3 : -0.3 // Tilt towards road
 

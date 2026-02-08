@@ -49,12 +49,25 @@ export function Floor() {
                     float grassFactor = smoothstep(0.1, 0.3, splat.g);
                     vec3 color = mix(uColorSand, uColorGrass, grassFactor);
                     
-                    // Mix Road (Red Channel)
+                    // Road: Red Channel
                     float roadFactor = smoothstep(0.1, 0.3, splat.r);
+                    
+                    // Curbs: Detect edge of road (0.3 to 0.4 range of splat.r)
+                    // Use standard fwidth or just a narrow band
+                    float curbFactor = smoothstep(0.05, 0.1, splat.r) - smoothstep(0.1, 0.15, splat.r);
+                    
+                    // Checkerboard pattern for curbs
+                    vec2 uvScaled = vUv * 200.0; // Scale pattern
+                    float curbPattern = mod(floor(uvScaled.x) + floor(uvScaled.y), 2.0);
+                    vec3 curbColor = mix(vec3(1.0, 1.0, 1.0), vec3(1.0, 0.0, 0.0), curbPattern);
+                    
+                    // Apply Road
                     color = mix(color, uColorRoad, roadFactor);
                     
+                    // Apply Curbs
+                    color = mix(color, curbColor, curbFactor);
+
                     // Water (Blue Channel) -> Alpha
-                    // Sharp cutout for water
                     float alpha = 1.0 - smoothstep(0.1, 0.3, splat.b);
                     
                     gl_FragColor = vec4(color, alpha);
@@ -87,16 +100,21 @@ export function Floor() {
     }, [scene, terrainMaterial])
 
     return (
-        <RigidBody type="fixed" colliders="trimesh" friction={0.7} restitution={0.1}>
-            {/* Terrain Mesh */}
+        <>
+            {/* Smooth flat collision floor - prevents ball jumping on banking */}
+            <RigidBody type="fixed" position={[0, 0, 0]} friction={0.7} restitution={0}>
+                <CuboidCollider args={[100, 0.1, 100]} />
+            </RigidBody>
+
+            {/* Visual terrain mesh (no collision) */}
             <primitive object={scene} />
 
-            {/* Central Floor Slab (Restored) */}
-            <mesh rotation-x={-Math.PI / 2} receiveShadow position={[0, 0.05, 0]}>
-                <circleGeometry args={[45, 64]} />
-                <primitive object={slabMaterial} attach="material" />
+            {/* Central floor slab */}
+            <mesh rotation-x={-Math.PI / 2} position-y={0.01} receiveShadow>
+                <circleGeometry args={[15, 32]} />
+                <meshStandardMaterial color="#b8b8b8" roughness={0.8} />
             </mesh>
-        </RigidBody>
+        </>
     )
 }
 

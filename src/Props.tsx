@@ -33,8 +33,8 @@ function PropGroup({ modelPath, scale = 1, collider = 'trimesh', type = 'fixed',
                     // Apply extra offset
                     const pos = mesh.position.clone().add(new THREE.Vector3(...offset))
 
-                    // Fix floating props: Drop them down to match terrain
-                    pos.y -= 1.0
+                    // Lift props above terrain
+                    pos.y += 0.5
 
                     // Trust reference/manual positions - NO FILTERING
                     instances.push({
@@ -55,11 +55,8 @@ function PropGroup({ modelPath, scale = 1, collider = 'trimesh', type = 'fixed',
         <Instances range={instances.length} geometry={geometry} material={material} castShadow receiveShadow>
             {instances.map((data, i) => (
                 <group key={i} position={data.position} rotation={data.rotation} scale={data.scale}>
-                    {/* Use trimesh for static objects for perfect collision, box for dynamic */}
-                    <RigidBody type={type} colliders={collider === 'box' ? false : collider} mass={mass} position={[0, 0, 0]}>
-                        <Instance />
-                        {collider === 'box' && <CuboidCollider args={[0.5, 0.5, 0.5]} position={[0, 0.5, 0]} />}
-                    </RigidBody>
+                    {/* Visual only - No collision to prevent ball jumping */}
+                    <Instance />
                 </group>
             ))}
         </Instances>

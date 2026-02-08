@@ -8,7 +8,7 @@ import { Grass } from './Grass'
 import { Props } from './Props'
 import { Water } from './Water'
 import { Projects } from './Projects'
-// import { Scenery } from './Scenery'
+import { Scenery } from './Scenery'
 import { Flowers } from './Flowers'
 import { Bushes } from './Bushes'
 import { PoleLights } from './PoleLights'
@@ -20,6 +20,8 @@ import { BowlingPins } from './BowlingPins'
 import { BrickWall } from './BrickWall'
 import { Particles } from './Particles'
 import { TireTracks } from './TireTracks'
+import { Bridge } from './Bridge'
+import { BoundaryMarkers } from './BoundaryMarkers'
 
 export const Experience = () => {
     return (
@@ -66,11 +68,15 @@ export const Experience = () => {
             {/* Tire tracks render on top of floor */}
             <TireTracks />
 
+            {/* Boundary Markers - Commented out (using invisible walls only) */}
+            {/* <BoundaryMarkers /> */}
+
             <Vegetation />
             <Grass />
             <Props />
+            <Bridge />
             <Projects />
-            {/* <Scenery /> */}
+            <Scenery />
             <ExplosiveCrates />
             <BowlingPins />
             <BrickWall />

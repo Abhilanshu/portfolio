@@ -135,7 +135,7 @@ export function Water() {
 
     return (
         <group>
-            {/* Main Ocean */}
+            {/* Main Ocean (Visual Only - No Collision) */}
             <mesh
                 ref={meshRef}
                 rotation-x={-Math.PI / 2}

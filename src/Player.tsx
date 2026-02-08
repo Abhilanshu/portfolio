@@ -77,10 +77,10 @@ export const Player = () => {
                 ref={body}
                 canSleep={false}
                 colliders="ball"
-                restitution={0.2}
+                restitution={0.05} // Very low bounce - prevent flying
                 friction={1}
-                linearDamping={0.5}
-                angularDamping={0.5}
+                linearDamping={0.8} // Increased damping to reduce bouncing
+                angularDamping={0.8}
                 position={[0, 1, 0]}
                 name="PlayerBody"
             >

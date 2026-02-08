@@ -34,13 +34,11 @@ const timelineData: TimelineEntry[] = [
 function TimelineItem({ entry, position }: { entry: TimelineEntry, position: [number, number, number] }) {
     return (
         <group position={position}>
-            {/* Pedestal */}
-            <RigidBody type="fixed" colliders="cuboid">
-                <mesh position={[0, 0.5, 0]} castShadow receiveShadow>
-                    <cylinderGeometry args={[0.8, 1, 1, 8]} />
-                    <meshStandardMaterial color="#8B7355" roughness={0.8} />
-                </mesh>
-            </RigidBody>
+            {/* Pedestal - Visual Only */}
+            <mesh position={[0, 0.5, 0]} castShadow receiveShadow>
+                <cylinderGeometry args={[0.8, 1, 1, 8]} />
+                <meshStandardMaterial color="#8B7355" roughness={0.8} />
+            </mesh>
 
             {/* Display Panel */}
             <mesh position={[0, 1.5, 0]} rotation={[0, Math.PI / 4, 0]}>
@@ -119,14 +117,12 @@ export function Timeline() {
 
     return (
         <group>
-            {/* Title Sign */}
+            {/* Title Sign - Visual Only */}
             <group position={[-15, 0, -20]}>
-                <RigidBody type="fixed" colliders="cuboid">
-                    <mesh position={[0, 2, 0]} castShadow>
-                        <boxGeometry args={[4, 1, 0.2]} />
-                        <meshStandardMaterial color="#34495E" />
-                    </mesh>
-                </RigidBody>
+                <mesh position={[0, 2, 0]} castShadow>
+                    <boxGeometry args={[4, 1, 0.2]} />
+                    <meshStandardMaterial color="#34495E" />
+                </mesh>
                 <Text
                     position={[0, 2, 0.15]}
                     fontSize={0.4}

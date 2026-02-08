@@ -82,38 +82,29 @@ export function ExplosiveCrate({ position }: ExplosiveCrateProps) {
         }
     }
 
-    if (exploded) {
-        return (
-            <>
-                {pieces.map((piece, i) => (
-                    <CratePiece key={i} position={piece.position} impulse={piece.impulse} />
-                ))}
-            </>
-        )
-    }
-
     return (
-        <RigidBody
-            ref={crateRef}
-            position={position}
-            colliders="cuboid"
-            restitution={0.2}
-            friction={0.8}
-            onCollisionEnter={handleCollision}
-        >
-            <mesh castShadow receiveShadow>
-                <boxGeometry args={[1, 1, 1]} />
-                <meshStandardMaterial
-                    color="#D2691E"
-                    roughness={0.8}
-                />
-            </mesh>
-            {/* "EXPLOSIVE" label */}
-            <mesh position={[0, 0, 0.51]}>
-                <planeGeometry args={[0.8, 0.3]} />
-                <meshBasicMaterial color="#FF4500" />
-            </mesh>
-        </RigidBody>
+        <group>
+            {!exploded ? (
+                <mesh position={position} castShadow receiveShadow>
+                    {/* TNT Crate visual only */}
+                    <boxGeometry args={[1, 1, 1]} />
+                    <meshStandardMaterial color="#D2691E" roughness={0.9} />
+                    {/* "EXPLOSIVE" label */}
+                    <mesh position={[0, 0, 0.51]}>
+                        <planeGeometry args={[0.8, 0.3]} />
+                        <meshBasicMaterial color="#FF4500" />
+                    </mesh>
+                </mesh>
+            ) : (
+                // Render explosion pieces (also visual only now)
+                pieces.map((piece, i) => (
+                    <mesh key={i} position={piece.position} castShadow>
+                        <boxGeometry args={[0.2, 0.2, 0.2]} />
+                        <meshStandardMaterial color="#8B4513" />
+                    </mesh>
+                ))
+            )}
+        </group>
     )
 }
 

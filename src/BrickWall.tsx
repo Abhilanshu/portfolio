@@ -30,22 +30,13 @@ export function BrickWall() {
     return (
         <group>
             {bricks.map((brick) => (
-                <RigidBody
-                    key={brick.key}
-                    position={brick.position}
-                    colliders="cuboid"
-                    restitution={0.1}
-                    friction={0.9}
-                    mass={0.5}
-                >
-                    <mesh castShadow receiveShadow>
-                        <boxGeometry args={[1, 0.4, 0.5]} />
-                        <meshStandardMaterial
-                            color="#8B4513"
-                            roughness={0.9}
-                        />
-                    </mesh>
-                </RigidBody>
+                <mesh key={brick.key} position={brick.position} castShadow receiveShadow>
+                    <boxGeometry args={[1, 0.4, 0.5]} />
+                    <meshStandardMaterial
+                        color="#8B4513"
+                        roughness={0.9}
+                    />
+                </mesh>
             ))}
         </group>
     )

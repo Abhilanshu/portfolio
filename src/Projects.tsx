@@ -20,22 +20,20 @@ function ProjectBoard({ project, position, rotation = [0, 0, 0] }: ProjectBoardP
 
     return (
         <group position={position} rotation={rotation}>
-            {/* Board Frame */}
-            <RigidBody type="fixed" colliders="hull">
-                <mesh position={[0, 1.5, 0]} onClick={handleBoardClick} onPointerOver={() => document.body.style.cursor = 'pointer'} onPointerOut={() => document.body.style.cursor = 'auto'}>
-                    <boxGeometry args={[4, 2.5, 0.2]} />
-                    <meshStandardMaterial color="#333" />
-                </mesh>
-                {/* Posts */}
-                <mesh position={[-1.8, 0.75, 0]}>
-                    <boxGeometry args={[0.2, 1.5, 0.2]} />
-                    <meshStandardMaterial color="#222" />
-                </mesh>
-                <mesh position={[1.8, 0.75, 0]}>
-                    <boxGeometry args={[0.2, 1.5, 0.2]} />
-                    <meshStandardMaterial color="#222" />
-                </mesh>
-            </RigidBody>
+            {/* Board Frame - Visual Only */}
+            <mesh position={[0, 1.5, 0]} onClick={handleBoardClick} onPointerOver={() => document.body.style.cursor = 'pointer'} onPointerOut={() => document.body.style.cursor = 'auto'}>
+                <boxGeometry args={[4, 2.5, 0.2]} />
+                <meshStandardMaterial color="#333" />
+            </mesh>
+            {/* Posts */}
+            <mesh position={[-1.8, 0.75, 0]}>
+                <boxGeometry args={[0.2, 1.5, 0.2]} />
+                <meshStandardMaterial color="#222" />
+            </mesh>
+            <mesh position={[1.8, 0.75, 0]}>
+                <boxGeometry args={[0.2, 1.5, 0.2]} />
+                <meshStandardMaterial color="#222" />
+            </mesh>
 
             {/* Image */}
             <mesh position={[0, 1.5, 0.11]} onClick={handleBoardClick}>

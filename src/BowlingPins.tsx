@@ -24,15 +24,8 @@ export function BowlingPins() {
     return (
         <group>
             {pinPositions.map((pos, i) => (
-                <RigidBody
-                    key={i}
-                    position={pos}
-                    colliders="hull"
-                    restitution={0.3}
-                    friction={0.8}
-                    mass={1}
-                >
-                    {/* Bowling pin shape */}
+                <group key={i} position={pos}>
+                    {/* Bowling pin shape - Visual Only */}
                     <group>
                         {/* Bottom cylinder */}
                         <mesh position={[0, 0.3, 0]} castShadow>
@@ -50,7 +43,7 @@ export function BowlingPins() {
                             <meshStandardMaterial color="#ff0000" />
                         </mesh>
                     </group>
-                </RigidBody>
+                </group>
             ))}
         </group>
     )

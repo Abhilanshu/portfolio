@@ -3,42 +3,27 @@ import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useTexture } from '@react-three/drei'
 
-// Bruno Simon Style Grass - Dense Instanced Mesh
 export function Grass() {
     const meshRef = useRef<THREE.InstancedMesh>(null)
-
-    // Load splat map to place grass only on "grass" areas (green channel)
     const splatMap = useTexture('/assets/models/terrain/terrain.png')
+    splatMap.flipY = false
 
-    const count = 100000 // Very dense lush grass
+    const count = 100000 // Lush grass
 
-    const dummy = useMemo(() => new THREE.Object3D(), [])
-
-    // Generate positions based on Splat Map
-    // Since we can't read pixels easily in React without a canvas, 
-    // we'll use a random distribution but filter by a simple radius logic for now
-    // or assume the outer ring (radius > 40) is grass.
-
+    // Generate particles in a large grid
     const particles = useMemo(() => {
         const temp = []
         for (let i = 0; i < count; i++) {
-            // Random position in donut shape
-            const angle = Math.random() * Math.PI * 2
-            // Start AFTER the track (Radius > 70)
-            const radius = 70 + Math.random() * 200
-            const x = Math.cos(angle) * radius
-            const z = Math.sin(angle) * radius
-
-            // Random rotation
+            const x = (Math.random() - 0.5) * 120
+            const z = (Math.random() - 0.5) * 120
             const rot = Math.random() * Math.PI
-
-            // Scale
             const scale = 0.5 + Math.random() * 0.5
-
             temp.push({ x, z, rot, scale })
         }
         return temp
     }, [])
+
+    const dummy = useMemo(() => new THREE.Object3D(), [])
 
     useMemo(() => {
         if (meshRef.current) {
@@ -47,41 +32,55 @@ export function Grass() {
                 dummy.rotation.y = p.rot
                 dummy.scale.setScalar(p.scale)
                 dummy.updateMatrix()
-                meshRef.current.setMatrixAt(i, dummy.matrix)
+                meshRef.current!.setMatrixAt(i, dummy.matrix)
             })
             meshRef.current.instanceMatrix.needsUpdate = true
         }
-    }, [particles])
+    }, [particles, dummy])
 
-    // Custom Shader for swaying
+    // Custom Shader with masking
     const material = useMemo(() => new THREE.ShaderMaterial({
         uniforms: {
             uTime: { value: 0 },
-            uColor1: { value: new THREE.Color('#8faa4e') }, // Light green
-            uColor2: { value: new THREE.Color('#4c6b2f') }, // Dark green
+            uColor1: { value: new THREE.Color('#8faa4e') },
+            uColor2: { value: new THREE.Color('#4c6b2f') },
+            uSplatMap: { value: splatMap },
         },
         vertexShader: `
             uniform float uTime;
+            uniform sampler2D uSplatMap;
             varying vec2 vUv;
-            varying float vY;
             
             void main() {
                 vUv = uv;
                 vec3 pos = position;
                 
-                // Swaying tip
-                float sway = sin(uTime + instanceMatrix[3][0] * 0.5) * 0.2; // Use x pos as seed
+                // Read instance position from matrix
+                vec3 instancePos = vec3(instanceMatrix[3][0], instanceMatrix[3][1], instanceMatrix[3][2]);
+                
+                // Map world position to UV (60x60 world centered at 0)
+                vec2 worldUv = (instancePos.xz / 60.0) + 0.5;
+                
+                // Sample splat map
+                vec4 splat = texture2D(uSplatMap, worldUv);
+                
+                // If not green (grass), scale to 0
+                float scale = 1.0;
+                if (splat.g < 0.5) scale = 0.0;
+                
+                // Swaying
+                float sway = sin(uTime + instancePos.x * 0.5) * 0.2;
                 pos.x += sway * uv.y * 0.5;
                 
+                pos *= scale;
+
                 gl_Position = projectionMatrix * modelViewMatrix * instanceMatrix * vec4(pos, 1.0);
-                vY = pos.y;
             }
         `,
         fragmentShader: `
             uniform vec3 uColor1;
             uniform vec3 uColor2;
             varying vec2 vUv;
-            varying float vY;
             
             void main() {
                 vec3 color = mix(uColor2, uColor1, vUv.y);
@@ -89,7 +88,7 @@ export function Grass() {
             }
         `,
         side: THREE.DoubleSide
-    }), [])
+    }), [splatMap])
 
     useFrame((state) => {
         if (material.uniforms) {
@@ -97,9 +96,8 @@ export function Grass() {
         }
     })
 
-    // Force grass slightly higher to avoid Z-fighting with bumpy terrain
     return (
-        <instancedMesh ref={meshRef} args={[undefined, undefined, count]} position-y={0.5}>
+        <instancedMesh ref={meshRef} args={[undefined, undefined, count]} position-y={0.3}>
             <planeGeometry args={[0.3, 0.8, 1, 4]} />
             <primitive object={material} attach="material" />
         </instancedMesh>

@@ -103,42 +103,60 @@ export function Floor() {
         <>
             {/* MAIN PHYSICS FLOOR */}
             <RigidBody type="fixed" friction={0.7} restitution={0.1}>
-                {/* Central Paved Area */}
+                {/* Central Paved Area - Keep for spawn */}
                 <mesh rotation-x={-Math.PI / 2} receiveShadow position-y={0}>
                     <planeGeometry args={[80, 80]} />
                     <primitive object={slabMaterial} attach="material" />
                 </mesh>
 
-                {/* Outer Orange Ground */}
+                {/* Outer Orange Ground with Splat Map for Road/Water */}
+                {/* Bruno's map is large, let's use a big plane instead of a ring to cover the whole winding track */}
                 <mesh rotation-x={-Math.PI / 2} receiveShadow position-y={-0.01}>
-                    <ringGeometry args={[40, 500, 64]} />
-                    <primitive object={terrainMaterial} attach="material" />
+                    <planeGeometry args={[200, 200, 256, 256]} />
+                    <shaderMaterial
+                        uniforms={{
+                            uColorWater: { value: new THREE.Color('#4da8da') },
+                            uColorSand: { value: new THREE.Color('#ffe8b5') },
+                            uColorGrass: { value: new THREE.Color('#ffa94e') },
+                            uColorRoad: { value: new THREE.Color('#333333') }, // Asphalt
+                            uSplatMap: { value: useTexture('/assets/models/terrain/terrain.png') },
+                        }}
+                        vertexShader={`
+                            varying vec2 vUv;
+                            void main() {
+                                vUv = uv;
+                                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                            }
+                        `}
+                        fragmentShader={`
+                            uniform vec3 uColorWater;
+                            uniform vec3 uColorSand;
+                            uniform vec3 uColorGrass;
+                            uniform vec3 uColorRoad;
+                            uniform sampler2D uSplatMap;
+                            varying vec2 vUv;
+                            
+                            void main() {
+                                vec4 splat = texture2D(uSplatMap, vUv);
+                                
+                                // Base: Grass/Sand (Green channel)
+                                vec3 color = mix(uColorSand, uColorGrass, splat.g);
+                                
+                                // Road: Red Channel
+                                color = mix(color, uColorRoad, splat.r);
+                                
+                                // Water: Blue Channel (make transparent)
+                                float alpha = 1.0 - splat.b; 
+                                
+                                gl_FragColor = vec4(color, alpha);
+                            }
+                        `}
+                        transparent={true}
+                    />
                 </mesh>
             </RigidBody>
 
-            {/* DECORATIVE ROADS with Curbs */}
-            {/* We'll simulate the "Track" from valid reference images */}
-
-            {/* Large Circular Track */}
-            <group position-y={0.01}>
-                {/* Asphalt */}
-                <mesh rotation-x={-Math.PI / 2}>
-                    <ringGeometry args={[50, 65, 128]} />
-                    <primitive object={roadMaterial} attach="material" />
-                </mesh>
-
-                {/* Inner Curb */}
-                <mesh rotation-x={-Math.PI / 2} position-y={0.005}>
-                    <ringGeometry args={[49, 50, 128]} />
-                    <primitive object={curbMaterial} attach="material" />
-                </mesh>
-
-                {/* Outer Curb */}
-                <mesh rotation-x={-Math.PI / 2} position-y={0.005}>
-                    <ringGeometry args={[65, 66, 128]} />
-                    <primitive object={curbMaterial} attach="material" />
-                </mesh>
-            </group>
+            {/* DECORATIVE ROADS REMOVED - Using Splat Map from now on */}
 
             {/* Boundary walls & Safety Net ... same as before */}
             <RigidBody type="fixed">

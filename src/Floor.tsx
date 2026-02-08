@@ -63,26 +63,40 @@ export function Floor() {
             transparent: true,
             side: THREE.DoubleSide
         })
-    }, [splatMap, noiseTexture])
-
-    // Apply material to everything in the scene
-    useMemo(() => {
-        if (scene) {
-            scene.traverse((child: any) => {
-                if (child.isMesh) {
-                    child.material = terrainMaterial
-                    child.receiveShadow = true
-                    child.castShadow = true
-                }
+        const slabMaterial = useMemo(() => {
+            return new THREE.MeshStandardMaterial({
+                map: noiseTexture, // Reuse noise texture as generic slab detail
+                roughness: 0.9,
+                metalness: 0,
+                color: '#ffcf8b',
             })
-        }
-    }, [scene, terrainMaterial])
+        }, [noiseTexture])
 
-    return (
-        <RigidBody type="fixed" colliders="trimesh" friction={0.7} restitution={0.1}>
-            <primitive object={scene} />
-        </RigidBody>
-    )
-}
+        // Apply material to everything in the scene
+        useMemo(() => {
+            if (scene) {
+                scene.traverse((child: any) => {
+                    if (child.isMesh) {
+                        child.material = terrainMaterial
+                        child.receiveShadow = true
+                        child.castShadow = true
+                    }
+                })
+            }
+        }, [scene, terrainMaterial])
+
+        return (
+            <RigidBody type="fixed" colliders="trimesh" friction={0.7} restitution={0.1}>
+                {/* Terrain Mesh */}
+                <primitive object={scene} />
+
+                {/* Central Floor Slab (Restored) */}
+                <mesh rotation-x={-Math.PI / 2} receiveShadow position={[0, 0.05, 0]}>
+                    <circleGeometry args={[45, 64]} />
+                    <primitive object={slabMaterial} attach="material" />
+                </mesh>
+            </RigidBody>
+        )
+    }
 
 useGLTF.preload('/assets/models/terrain/terrain.glb')

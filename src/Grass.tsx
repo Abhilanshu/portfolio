@@ -97,8 +97,9 @@ export function Grass() {
         }
     })
 
+    // Force grass slightly higher to avoid Z-fighting with bumpy terrain
     return (
-        <instancedMesh ref={meshRef} args={[undefined, undefined, count]} position-y={-0.02}>
+        <instancedMesh ref={meshRef} args={[undefined, undefined, count]} position-y={0.5}>
             <planeGeometry args={[0.3, 0.8, 1, 4]} />
             <primitive object={material} attach="material" />
         </instancedMesh>

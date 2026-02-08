@@ -2,97 +2,70 @@ import { useProgress } from '@react-three/drei'
 import { useEffect, useState } from 'react'
 
 export function LoadingScreen() {
-    const { progress } = useProgress()
-    const [show, setShow] = useState(true)
+    const { progress, active } = useProgress()
+    const [finished, setFinished] = useState(false)
 
     useEffect(() => {
-        // Keep showing for smooth transition even after loading
         if (progress === 100) {
-            setTimeout(() => setShow(false), 500)
+            // Add a small delay for smooth transition
+            setTimeout(() => setFinished(true), 500)
         }
     }, [progress])
 
-    if (!show) return null
+    if (finished) return null
 
     return (
-        <div style={{
-            width: '100vw',
-            height: '100vh',
+        <div className="loading-screen" style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: '#111',
+            zIndex: 2000,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            color: 'white',
-            fontFamily: 'Inter, system-ui, sans-serif',
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            zIndex: 9999,
-            transition: 'opacity 0.5s ease',
+            transition: 'opacity 0.5s ease-out',
             opacity: progress === 100 ? 0 : 1,
-            pointerEvents: progress === 100 ? 'none' : 'all'
+            pointerEvents: progress === 100 ? 'none' : 'auto'
         }}>
-            {/* Animated logo */}
             <div style={{
-                fontSize: '3rem',
+                fontSize: '40px',
                 fontWeight: 'bold',
-                marginBottom: '2rem',
-                animation: 'pulse 2s infinite',
-                textShadow: '0 0 20px rgba(255,255,255,0.5)'
+                color: '#fff',
+                marginBottom: '20px',
+                fontFamily: 'Inter, sans-serif'
             }}>
-                🌐 Portfolio
+                Loading
             </div>
 
-            {/* Progress bar container */}
+            {/* Progress Bar Container */}
             <div style={{
-                width: '300px',
-                height: '8px',
-                background: 'rgba(255,255,255,0.2)',
-                borderRadius: '10px',
-                overflow: 'hidden',
-                marginBottom: '1rem'
+                width: '200px',
+                height: '4px',
+                background: '#333',
+                borderRadius: '2px',
+                overflow: 'hidden'
             }}>
-                {/* Progress fill */}
+                {/* Progress Bar Fill */}
                 <div style={{
                     width: `${progress}%`,
                     height: '100%',
-                    background: 'linear-gradient(90deg, #FFD700, #FFA500)',
-                    borderRadius: '10px',
-                    transition: 'width 0.3s ease',
-                    boxShadow: '0 0 10px rgba(255,215,0,0.8)'
+                    background: '#FFD700', // Gold color
+                    transition: 'width 0.2s ease-out'
                 }} />
             </div>
 
-            {/* Percentage text */}
             <div style={{
-                fontSize: '1.2rem',
-                fontWeight: '500',
-                opacity: 0.9
+                marginTop: '10px',
+                color: '#666',
+                fontSize: '14px',
+                fontFamily: 'monospace'
             }}>
-                {progress.toFixed(0)}%
+                {Math.round(progress)}%
             </div>
-
-            {/* Loading hint */}
-            <div style={{
-                marginTop: '2rem',
-                fontSize: '0.9rem',
-                opacity: 0.7,
-                textAlign: 'center'
-            }}>
-                {progress < 30 && 'Loading assets...'}
-                {progress >= 30 && progress < 70 && 'Building world...'}
-                {progress >= 70 && progress < 100 && 'Almost ready...'}
-                {progress === 100 && 'All set!'}
-            </div>
-
-            {/* CSS Animation */}
-            <style>{`
-                @keyframes pulse {
-                    0%, 100% { transform: scale(1); }
-                    50% { transform: scale(1.05); }
-                }
-            `}</style>
         </div>
     )
 }

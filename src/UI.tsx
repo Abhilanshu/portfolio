@@ -41,22 +41,16 @@ export function UI() {
                 </button>
             </div>
 
-            {/* Credits */}
-            <div className="credits">
-                <span>Inspired by </span>
-                <a href="https://bruno-simon.com" target="_blank" rel="noopener noreferrer">
-                    Bruno Simon
-                </a>
-            </div>
+
 
             {/* Social Links Panel */}
             <div className="socials-panel">
                 <h3>Socials</h3>
                 <ul>
-                    <li><a href="mailto:simon.bruno.77@gmail.com">Mail</a></li>
-                    <li><a href="https://x.com/bruno_simon" target="_blank" rel="noreferrer">X (Twitter)</a></li>
-                    <li><a href="https://github.com/brunosimon" target="_blank" rel="noreferrer">GitHub</a></li>
-                    <li><a href="https://www.linkedin.com/in/simonbruno77/" target="_blank" rel="noreferrer">LinkedIn</a></li>
+                    <li><a href="mailto:abhilanshuvittolia22@gmail.com">Email Me</a></li>
+                    <li><a href="https://x.com/abhilanshu" target="_blank" rel="noreferrer">My X (Twitter)</a></li>
+                    <li><a href="https://github.com/Abhilanshu" target="_blank" rel="noreferrer">My GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/in/abhilanshu-vittolia-33a161359/" target="_blank" rel="noreferrer">My LinkedIn</a></li>
                     <li><a href="https://element-3.com" target="_blank" rel="noreferrer">Elements</a></li>
                 </ul>
             </div>

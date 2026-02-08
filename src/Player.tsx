@@ -83,6 +83,17 @@ export const Player = () => {
                 angularDamping={0.8}
                 position={[0, 1, 0]}
                 name="PlayerBody"
+                onCollisionEnter={(_event) => {
+                    // Play collision sound based on impact intensity
+                    const velocity = body.current?.linvel()
+                    if (velocity) {
+                        const speed = Math.sqrt(velocity.x ** 2 + velocity.y ** 2 + velocity.z ** 2)
+                        const intensity = Math.min(speed / 10, 1) // Normalize to 0-1
+                        if (intensity > 0.1 && (window as any).playCollisionSound) {
+                            (window as any).playCollisionSound(intensity)
+                        }
+                    }
+                }}
             >
                 <mesh castShadow receiveShadow>
                     <icosahedronGeometry args={[0.3, 1]} />

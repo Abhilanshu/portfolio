@@ -1,7 +1,7 @@
 import { useTexture, Text } from '@react-three/drei'
-import { RigidBody } from '@react-three/rapier'
 import { projects } from './data/projects'
-import * as THREE from 'three'
+import { useGameStore } from './store/useGameStore'
+import { useState } from 'react'
 
 interface ProjectBoardProps {
     project: typeof projects[0]
@@ -12,9 +12,18 @@ interface ProjectBoardProps {
 function ProjectBoard({ project, position, rotation = [0, 0, 0] }: ProjectBoardProps) {
     // Load texture
     const texture = useTexture(`/assets/models/projects/images/${project.image}`)
-    // texture.encoding = THREE.sRGBEncoding // handled auto in newer three/r3f
+    const addPoints = useGameStore((state) => state.addPoints)
+    const [showPoints, setShowPoints] = useState(false)
 
     const handleBoardClick = () => {
+        // Award points (10 per billboard)
+        addPoints(`project-${project.title}`, 10)
+
+        // Show floating text
+        setShowPoints(true)
+        setTimeout(() => setShowPoints(false), 1000)
+
+        // Open project URL
         window.open(project.url, '_blank')
     }
 
@@ -52,6 +61,21 @@ function ProjectBoard({ project, position, rotation = [0, 0, 0] }: ProjectBoardP
             >
                 {project.title}
             </Text>
+
+            {/* Floating Points Feedback */}
+            {showPoints && (
+                <Text
+                    position={[0, 3.5, 0]}
+                    fontSize={0.5}
+                    color="#FFD700"
+                    anchorX="center"
+                    anchorY="middle"
+                    outlineWidth={0.05}
+                    outlineColor="#000000"
+                >
+                    +10 Points!
+                </Text>
+            )}
         </group>
     )
 }
@@ -60,17 +84,32 @@ export function Projects() {
     return (
         <>
             {projects.map((project, index) => {
-                // Place them far from center track - much wider spacing
-                const z = -20 - (index * 15) // Start at -20, space by 15
-                const x = index % 2 === 0 ? -15 : 15 // Much wider - away from track
-                const rotY = index % 2 === 0 ? 0.3 : -0.3 // Tilt towards road
+                // Spread them to DIFFERENT empty areas - one on orange platform shown by user
+                const positions = [
+                    [5, 0.5, 11],      // Billboard 1: Orange platform location (from user screenshot)
+                    [-25, 0.5, -30],   // Billboard 2: Far left grass area
+                    [25, 0.5, -15],    // Billboard 3: Far right grass area
+                    [-15, 0.5, 25],    // Billboard 4: Back left empty space
+                    [20, 0.5, 30],     // Billboard 5: Back right empty corner
+                ]
+
+                const rotations = [
+                    [0, 0.2, 0],       // Face slightly inward
+                    [0, -0.5, 0],      // Face inward
+                    [0, 0.5, 0],       // Face inward
+                    [0, -0.3, 0],      // Slight angle
+                    [0, 0.4, 0],       // Face inward
+                ]
+
+                const [x, y, z] = positions[index] || [5, 0.5, 11]
+                const rotation = rotations[index] || [0, 0, 0]
 
                 return (
                     <ProjectBoard
                         key={index}
                         project={project}
-                        position={[x, 0, z]}
-                        rotation={[0, rotY, 0]}
+                        position={[x, y, z]}
+                        rotation={rotation}
                     />
                 )
             })}

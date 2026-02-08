@@ -6,6 +6,11 @@ import { EffectComposer, TiltShift2, Vignette, Bloom } from '@react-three/postpr
 import { Suspense } from 'react'
 import { IntroScreen } from './IntroScreen'
 import { UI } from './UI'
+import { SoundManager } from './SoundManager'
+import { MobileControls } from './MobileControls'
+import { MinimapUI } from './Minimap'
+import { ScoreDisplay } from './ScoreDisplay'
+import { LoadingScreen } from './LoadingScreen'
 
 export default function App() {
   const map = [
@@ -19,14 +24,16 @@ export default function App() {
 
   return (
     <>
+      <LoadingScreen />
       <IntroScreen />
+      <SoundManager enabled={true} />
       <UI />
+      <ScoreDisplay />
       <KeyboardControls map={map}>
         <Canvas
+          camera={{ position: [0, 10, 20], fov: 42 }}
+          gl={{ antialias: true }}
           shadows
-          camera={{ position: [15, 15, 15], fov: 25 }}
-          style={{ background: '#87CEEB' }}
-          gl={{ antialias: true, alpha: false }}
           dpr={[1, 2]}
         >
           <Suspense fallback={null}>
@@ -41,6 +48,8 @@ export default function App() {
           </Suspense>
         </Canvas>
       </KeyboardControls>
+      <MobileControls />
+      <MinimapUI />
     </>
   )
 }

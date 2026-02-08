@@ -53,16 +53,12 @@ function TreeGroup({ visualPath, referencePath, leavesColor }: TreeGroupProps) {
                 // In Bruno's source, children of the scene are the instances
                 if (child.parent === referenceScene) {
                     const pos = child.position.clone()
-                    const radius = Math.sqrt(pos.x * pos.x + pos.z * pos.z)
-
-                    // Filter out trees on the track (Radius 48 - 68)
-                    if (radius < 48 || radius > 68) {
-                        instances.push({
-                            position: pos,
-                            rotation: child.rotation.clone(),
-                            scale: child.scale.clone()
-                        })
-                    }
+                    // Trust reference model positions entirely
+                    instances.push({
+                        position: pos,
+                        rotation: child.rotation.clone(),
+                        scale: child.scale.clone()
+                    })
                 }
             })
         }

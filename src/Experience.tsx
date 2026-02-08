@@ -85,10 +85,9 @@ export const Experience = () => {
             <BrickWall />
             <Particles />
             <Timeline />
-            {/* TEMPORARILY DISABLED for debugging black screen */}
-            {/* <Contact /> */}
-            {/* <Skills /> */}
-            {/* <About /> */}
+            <Contact />
+            <Skills />
+            <About />
             <Flowers />
             <Bushes />
             <PoleLights />

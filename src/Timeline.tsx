@@ -130,7 +130,7 @@ export function Timeline() {
                     anchorX="center"
                     anchorY="middle"
                 >
-                    CAREER TIMELINE
+                    CAREER JOURNEY
                 </Text>
             </group>
 
